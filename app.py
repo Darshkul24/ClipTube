@@ -11,10 +11,31 @@ from datetime import datetime
 import json
 import pystray
 from pystray import MenuItem as item
+import webbrowser
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyBHbCmXunkvJGHnaHSvjCwyDv6HQxB3PVg"
+load_dotenv()
+API_KEY = os.getenv("YT_API_KEY")
+
+if not API_KEY:
+    raise ValueError("API Key not found! Make sure to set YT_API_KEY in your environment.")
 HISTORY_FILE = "download_history.json"
+CURRENT_VERSION = "1.0.0"
 
+def check_for_update():
+    try:
+        response = requests.get("/version.json")
+        response.raise_for_status()
+        data = response.json()
+
+        latest_version = data["version"]
+        download_url = data["download_url"]
+
+        if latest_version != CURRENT_VERSION:
+            if messagebox.askyesno("Update Available", f"A new version ({latest_version}) is available. Do you want to download it?"):
+                webbrowser.open(download_url)
+    except Exception as e:
+        print(f"Error checking for updates: {e}")
 
 class ClipTubeApp:
     def __init__(self, root):
@@ -100,9 +121,11 @@ class ClipTubeApp:
         # Set Taskbar Icon
         self.set_taskbar_icon()
 
+        check_for_update()
+
     def set_taskbar_icon(self):
         # Load the icon image
-        icon_image = Image.open(r"G:\Coding\Projects\Incomplete\ClipTube\ClipTube Logo.png")
+        icon_image = Image.open(r"F:\Coding\Projects\Complete\ClipTube\ClipTube Logo.png")
         icon_image = icon_image.resize((64, 64))  # Resize to appropriate size
         icon = pystray.Icon("ClipTube", icon_image, "ClipTube")
         

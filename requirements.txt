@@ -31,7 +31,7 @@ Pygments==2.18.0
 pypiwin32==223
 pystray==0.19.5
 python-dotenv==1.0.1
-pywin32
+pywin32==304
 requests==2.32.3
 sh==2.1.0
 six==1.17.0

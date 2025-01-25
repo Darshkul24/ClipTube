@@ -28,8 +28,6 @@ platformdirs==4.3.6
 ptyprocess==0.7.0
 pycparser==2.22
 Pygments==2.18.0
-pypiwin32==223
-pywin32>=223; platform_system == "Windows"
 pystray==0.19.5
 python-dotenv==1.0.1
 requests==2.32.3
